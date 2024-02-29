@@ -1,26 +1,60 @@
-import { useState } from "react";
-import CreateEmployeeCSS from "./CreateEmployee.module.css";
+import { useEffect, useState } from "react";
+import {
+  StyledFormLayout,
+  StyledGlobalLayout,
+  StyledLabel,
+  StyledAddress,
+  StyledSelect,
+  StyledSubmitButton,
+} from "./index.style.js";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  fetchEmployees,
+  createEmployee,
+} from "../../redux/employees/employeesSlice";
+import Modal from "../../components/Modal/index.jsx";
+
 function CreateEmployee() {
+  const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [department, setDepartment] = useState("");
+  const [department, setDepartment] = useState("Sales");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [federatedState, setFederatedState] = useState("Alabama");
   const [zipCode, setZipCode] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, []);
+
+  function onSubmit() {
+    dispatch(
+      createEmployee({
+        firstName,
+        lastName,
+        birthDate,
+        startDate,
+        department,
+        street,
+        city,
+        federatedState,
+        zipCode,
+      })
+    );
+  }
 
   return (
-    <main className={CreateEmployeeCSS.global_layout}>
+    <StyledGlobalLayout>
       <h1>HRnet</h1>
       <Link to="/employee-list">View Current Employees</Link>
       <h2>Create Employee</h2>
-      <form className={CreateEmployeeCSS.form_layout}>
-        <label htmlFor="firstName" className={CreateEmployeeCSS.label_margins}>
-          First Name
-        </label>
+      <StyledFormLayout>
+        <StyledLabel htmlFor="firstName">First Name</StyledLabel>
         <input
           type="text"
           name="firstName"
@@ -28,9 +62,7 @@ function CreateEmployee() {
             setFirstName(event.target.value);
           }}
         />
-        <label htmlFor="lastName" className={CreateEmployeeCSS.label_margins}>
-          Last Name
-        </label>
+        <StyledLabel htmlFor="lastName">Last Name</StyledLabel>
         <input
           type="text"
           name="lastName"
@@ -38,9 +70,7 @@ function CreateEmployee() {
             setLastName(event.target.value);
           }}
         />
-        <label htmlFor="birthDate" className={CreateEmployeeCSS.label_margins}>
-          Date of birth
-        </label>
+        <StyledLabel htmlFor="birthDate">Date of birth</StyledLabel>
         <input
           type="date"
           name="birthDate"
@@ -48,9 +78,7 @@ function CreateEmployee() {
             setBirthDate(event.target.value);
           }}
         />
-        <label htmlFor="startDate" className={CreateEmployeeCSS.label_margins}>
-          Start date
-        </label>
+        <StyledLabel htmlFor="startDate">Start date</StyledLabel>
         <input
           type="date"
           name="startDate"
@@ -59,11 +87,9 @@ function CreateEmployee() {
           }}
         />
 
-        <fieldset className={CreateEmployeeCSS.address}>
+        <StyledAddress>
           <legend>Address</legend>
-          <label htmlFor="street" className={CreateEmployeeCSS.label_margins}>
-            Street
-          </label>
+          <StyledLabel htmlFor="street">Street</StyledLabel>
           <input
             type="text"
             name="street"
@@ -71,9 +97,7 @@ function CreateEmployee() {
               setStreet(event.target.value);
             }}
           />
-          <label htmlFor="city" className={CreateEmployeeCSS.label_margins}>
-            City
-          </label>
+          <StyledLabel htmlFor="city">City</StyledLabel>
           <input
             type="text"
             name="city"
@@ -81,23 +105,18 @@ function CreateEmployee() {
               setCity(event.target.value);
             }}
           />
-          <label htmlFor="state" className={CreateEmployeeCSS.label_margins}>
-            State
-          </label>
-          <select
-            name="state"
+          <StyledLabel htmlFor="federatedState">State</StyledLabel>
+          <StyledSelect
+            name="federatedState"
             onChange={(event) => {
-              setState(event.target.value);
+              setFederatedState(event.target.value);
             }}
-            className={CreateEmployeeCSS.select}
           >
             {states.map((item) => (
               <option key={item.abbreviation}>{item.name}</option>
             ))}
-          </select>
-          <label htmlFor="zipCode" className={CreateEmployeeCSS.label_margins}>
-            Zip code
-          </label>
+          </StyledSelect>
+          <StyledLabel htmlFor="zipCode">Zip code</StyledLabel>
           <input
             type="text"
             name="zipCode"
@@ -105,28 +124,40 @@ function CreateEmployee() {
               setZipCode(event.target.value);
             }}
           />
-        </fieldset>
-        <label htmlFor="department" className={CreateEmployeeCSS.label_margins}>
-          Department
-        </label>
-        <select name="department" className={CreateEmployeeCSS.select}>
+        </StyledAddress>
+        <StyledLabel htmlFor="department">Department</StyledLabel>
+        <StyledSelect
+          name="department"
+          onChange={(event) => {
+            setDepartment(event.target.value);
+          }}
+        >
           <option>Sales</option>
           <option>Marketing</option>
           <option>Engineering</option>
           <option>Human Resources</option>
           <option>Legal</option>
-        </select>
-        <input
+        </StyledSelect>
+        <StyledSubmitButton
           type="submit"
           name="submit"
           value="Save"
-          className="edit-button"
           onClick={(e) => {
             e.preventDefault();
+            onSubmit();
           }}
         />
-      </form>
-    </main>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setShowModal(true);
+          }}
+        >
+          montrer modale
+        </button>
+      </StyledFormLayout>
+      {showModal && <Modal onClose={() => setShowModal(false)} />}
+    </StyledGlobalLayout>
   );
 }
 const states = [
