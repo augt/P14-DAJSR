@@ -3,13 +3,21 @@ import {
   StyledModalBackground,
   StyledModalContainer,
 } from "./index.style";
+import PropTypes from "prop-types";
 
-function Modal({ onClose }) {
+Modal.propTypes = {
+  onClose: PropTypes.func,
+  errorMessages: PropTypes.array,
+};
+
+function Modal({ onClose, errorMessages }) {
   return (
     <StyledModalBackground>
       <StyledModalContainer>
         <div>Employee Created!</div>
-
+        {errorMessages.map((message) => {
+          <div>{message}</div>;
+        })}
         <StyledCloseButton
           onClick={(e) => {
             e.preventDefault();

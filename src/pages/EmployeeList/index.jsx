@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchEmployees } from "../../redux/employees/employeesSlice";
 import { Link } from "react-router-dom";
-import { StyledEmployeeList } from "./index.style";
+import { StyledEmployeeList, TextField, ClearButton } from "./index.style";
+import PropTypes from "prop-types";
 
 function EmployeeList() {
   const dispatch = useDispatch();
@@ -60,13 +61,67 @@ function EmployeeList() {
     },
   ];
 
+  const [filterText, setFilterText] = useState("");
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const filteredItems = employees.filter((item) => {
+    return Object.values(item).some((element) =>
+      element.toLowerCase().includes(filterText.toLowerCase())
+    );
+  });
+
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText("");
+      }
+    };
+
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
+  }, [filterText, resetPaginationToggle]);
+
   return (
     <StyledEmployeeList>
       <h1>Current Employees</h1>
-      <DataTable columns={columns} data={employees} />
+      <DataTable
+        columns={columns}
+        data={filteredItems}
+        pagination
+        paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+        selectableRows
+        persistTableHead
+      />
       <Link to="/">Home</Link>
     </StyledEmployeeList>
   );
 }
 
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search an employee"
+      aria-label="Search Input"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" onClick={onClear}>
+      X
+    </ClearButton>
+  </>
+);
+FilterComponent.propTypes = {
+  filterText: PropTypes.string,
+  onFilter: PropTypes.func,
+  onClear: PropTypes.func,
+};
 export default EmployeeList;

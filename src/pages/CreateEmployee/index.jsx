@@ -58,6 +58,7 @@ function CreateEmployee() {
         <input
           type="text"
           name="firstName"
+          id="firstName"
           onChange={(event) => {
             setFirstName(event.target.value);
           }}
@@ -66,6 +67,7 @@ function CreateEmployee() {
         <input
           type="text"
           name="lastName"
+          id="lastName"
           onChange={(event) => {
             setLastName(event.target.value);
           }}
@@ -74,6 +76,7 @@ function CreateEmployee() {
         <input
           type="date"
           name="birthDate"
+          id="birthDate"
           onChange={(event) => {
             setBirthDate(event.target.value);
           }}
@@ -82,6 +85,7 @@ function CreateEmployee() {
         <input
           type="date"
           name="startDate"
+          id="startDate"
           onChange={(event) => {
             setStartDate(event.target.value);
           }}
@@ -93,6 +97,7 @@ function CreateEmployee() {
           <input
             type="text"
             name="street"
+            id="street"
             onChange={(event) => {
               setStreet(event.target.value);
             }}
@@ -101,6 +106,7 @@ function CreateEmployee() {
           <input
             type="text"
             name="city"
+            id="city"
             onChange={(event) => {
               setCity(event.target.value);
             }}
@@ -108,6 +114,7 @@ function CreateEmployee() {
           <StyledLabel htmlFor="federatedState">State</StyledLabel>
           <StyledSelect
             name="federatedState"
+            id="federatedState"
             onChange={(event) => {
               setFederatedState(event.target.value);
             }}
@@ -120,6 +127,7 @@ function CreateEmployee() {
           <input
             type="text"
             name="zipCode"
+            id="zipCode"
             onChange={(event) => {
               setZipCode(event.target.value);
             }}
@@ -128,6 +136,7 @@ function CreateEmployee() {
         <StyledLabel htmlFor="department">Department</StyledLabel>
         <StyledSelect
           name="department"
+          id="department"
           onChange={(event) => {
             setDepartment(event.target.value);
           }}
@@ -141,6 +150,7 @@ function CreateEmployee() {
         <StyledSubmitButton
           type="submit"
           name="submit"
+          id="submit"
           value="Save"
           onClick={(e) => {
             e.preventDefault();
@@ -160,6 +170,9 @@ function CreateEmployee() {
     </StyledGlobalLayout>
   );
 }
+
+export default CreateEmployee;
+
 const states = [
   {
     name: "Alabama",
@@ -398,5 +411,3 @@ const states = [
     abbreviation: "WY",
   },
 ];
-
-export default CreateEmployee;
