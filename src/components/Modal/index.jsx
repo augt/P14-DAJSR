@@ -7,17 +7,18 @@ import PropTypes from "prop-types";
 
 Modal.propTypes = {
   onClose: PropTypes.func,
-  errorMessages: PropTypes.array,
+  errorMessage: PropTypes.string,
 };
 
-function Modal({ onClose, errorMessages }) {
+function Modal({ onClose, errorMessage }) {
   return (
     <StyledModalBackground>
       <StyledModalContainer>
-        <div>Employee Created!</div>
-        {errorMessages.map((message) => {
-          <div>{message}</div>;
-        })}
+        {errorMessage ? (
+          <div>{errorMessage}</div>
+        ) : (
+          <div>Employee Created!</div>
+        )}
         <StyledCloseButton
           onClick={(e) => {
             e.preventDefault();

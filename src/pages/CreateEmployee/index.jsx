@@ -27,25 +27,41 @@ function CreateEmployee() {
   const [federatedState, setFederatedState] = useState("Alabama");
   const [zipCode, setZipCode] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(fetchEmployees());
   }, []);
 
-  function onSubmit() {
-    dispatch(
-      createEmployee({
-        firstName,
-        lastName,
-        birthDate,
-        startDate,
-        department,
-        street,
-        city,
-        federatedState,
-        zipCode,
-      })
-    );
+  function employeeValidation(employee) {
+    const isName =
+      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+
+    if (isName.test(employee.firstName) === false) {
+      setErrorMessage("First name is not valid.");
+      return false;
+    }
+    if (isName.test(employee.lastName) === false) {
+      setErrorMessage("Last name is not valid.");
+      return false;
+    }
+    if (
+      !employee.birthDate ||
+      !employee.startDate ||
+      !employee.street ||
+      !employee.city ||
+      !employee.zipCode
+    ) {
+      setErrorMessage("Please fill in all the form items.");
+      return false;
+    }
+  }
+
+  function onSubmit(newEmployee) {
+    if (employeeValidation(newEmployee) !== false) {
+      setErrorMessage("");
+      dispatch(createEmployee(newEmployee));
+    }
   }
 
   return (
@@ -154,19 +170,27 @@ function CreateEmployee() {
           value="Save"
           onClick={(e) => {
             e.preventDefault();
-            onSubmit();
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
+            onSubmit({
+              firstName,
+              lastName,
+              birthDate,
+              startDate,
+              department,
+              street,
+              city,
+              federatedState,
+              zipCode,
+            });
             setShowModal(true);
           }}
-        >
-          montrer modale
-        </button>
+        />
       </StyledFormLayout>
-      {showModal && <Modal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <Modal
+          onClose={() => setShowModal(false)}
+          errorMessage={errorMessage}
+        />
+      )}
     </StyledGlobalLayout>
   );
 }
