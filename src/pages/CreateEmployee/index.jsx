@@ -4,7 +4,6 @@ import {
   StyledGlobalLayout,
   StyledLabel,
   StyledAddress,
-  StyledSelect,
   StyledSubmitButton,
 } from "./index.style.js";
 import { useDispatch } from "react-redux";
@@ -14,6 +13,7 @@ import {
   createEmployee,
 } from "../../redux/employees/employeesSlice";
 import Modal from "../../components/Modal/index.jsx";
+import CustomSelect from "../../components/CustomSelect/index.jsx";
 
 function CreateEmployee() {
   const dispatch = useDispatch();
@@ -127,18 +127,12 @@ function CreateEmployee() {
               setCity(event.target.value);
             }}
           />
-          <StyledLabel htmlFor="federatedState">State</StyledLabel>
-          <StyledSelect
-            name="federatedState"
-            id="federatedState"
-            onChange={(event) => {
-              setFederatedState(event.target.value);
-            }}
-          >
-            {states.map((item) => (
-              <option key={item.abbreviation}>{item.name}</option>
-            ))}
-          </StyledSelect>
+          <CustomSelect
+            inputName="federatedState"
+            label="State"
+            options={states}
+            handleChange={setFederatedState}
+          />
           <StyledLabel htmlFor="zipCode">Zip code</StyledLabel>
           <input
             type="text"
@@ -149,20 +143,12 @@ function CreateEmployee() {
             }}
           />
         </StyledAddress>
-        <StyledLabel htmlFor="department">Department</StyledLabel>
-        <StyledSelect
-          name="department"
-          id="department"
-          onChange={(event) => {
-            setDepartment(event.target.value);
-          }}
-        >
-          <option>Sales</option>
-          <option>Marketing</option>
-          <option>Engineering</option>
-          <option>Human Resources</option>
-          <option>Legal</option>
-        </StyledSelect>
+        <CustomSelect
+          inputName="department"
+          label="Department"
+          options={departments}
+          handleChange={setDepartment}
+        />
         <StyledSubmitButton
           type="submit"
           name="submit"
@@ -200,238 +186,257 @@ export default CreateEmployee;
 const states = [
   {
     name: "Alabama",
-    abbreviation: "AL",
+    valueToSave: "AL",
   },
   {
     name: "Alaska",
-    abbreviation: "AK",
+    valueToSave: "AK",
   },
   {
     name: "American Samoa",
-    abbreviation: "AS",
+    valueToSave: "AS",
   },
   {
     name: "Arizona",
-    abbreviation: "AZ",
+    valueToSave: "AZ",
   },
   {
     name: "Arkansas",
-    abbreviation: "AR",
+    valueToSave: "AR",
   },
   {
     name: "California",
-    abbreviation: "CA",
+    valueToSave: "CA",
   },
   {
     name: "Colorado",
-    abbreviation: "CO",
+    valueToSave: "CO",
   },
   {
     name: "Connecticut",
-    abbreviation: "CT",
+    valueToSave: "CT",
   },
   {
     name: "Delaware",
-    abbreviation: "DE",
+    valueToSave: "DE",
   },
   {
     name: "District Of Columbia",
-    abbreviation: "DC",
+    valueToSave: "DC",
   },
   {
     name: "Federated States Of Micronesia",
-    abbreviation: "FM",
+    valueToSave: "FM",
   },
   {
     name: "Florida",
-    abbreviation: "FL",
+    valueToSave: "FL",
   },
   {
     name: "Georgia",
-    abbreviation: "GA",
+    valueToSave: "GA",
   },
   {
     name: "Guam",
-    abbreviation: "GU",
+    valueToSave: "GU",
   },
   {
     name: "Hawaii",
-    abbreviation: "HI",
+    valueToSave: "HI",
   },
   {
     name: "Idaho",
-    abbreviation: "ID",
+    valueToSave: "ID",
   },
   {
     name: "Illinois",
-    abbreviation: "IL",
+    valueToSave: "IL",
   },
   {
     name: "Indiana",
-    abbreviation: "IN",
+    valueToSave: "IN",
   },
   {
     name: "Iowa",
-    abbreviation: "IA",
+    valueToSave: "IA",
   },
   {
     name: "Kansas",
-    abbreviation: "KS",
+    valueToSave: "KS",
   },
   {
     name: "Kentucky",
-    abbreviation: "KY",
+    valueToSave: "KY",
   },
   {
     name: "Louisiana",
-    abbreviation: "LA",
+    valueToSave: "LA",
   },
   {
     name: "Maine",
-    abbreviation: "ME",
+    valueToSave: "ME",
   },
   {
     name: "Marshall Islands",
-    abbreviation: "MH",
+    valueToSave: "MH",
   },
   {
     name: "Maryland",
-    abbreviation: "MD",
+    valueToSave: "MD",
   },
   {
     name: "Massachusetts",
-    abbreviation: "MA",
+    valueToSave: "MA",
   },
   {
     name: "Michigan",
-    abbreviation: "MI",
+    valueToSave: "MI",
   },
   {
     name: "Minnesota",
-    abbreviation: "MN",
+    valueToSave: "MN",
   },
   {
     name: "Mississippi",
-    abbreviation: "MS",
+    valueToSave: "MS",
   },
   {
     name: "Missouri",
-    abbreviation: "MO",
+    valueToSave: "MO",
   },
   {
     name: "Montana",
-    abbreviation: "MT",
+    valueToSave: "MT",
   },
   {
     name: "Nebraska",
-    abbreviation: "NE",
+    valueToSave: "NE",
   },
   {
     name: "Nevada",
-    abbreviation: "NV",
+    valueToSave: "NV",
   },
   {
     name: "New Hampshire",
-    abbreviation: "NH",
+    valueToSave: "NH",
   },
   {
     name: "New Jersey",
-    abbreviation: "NJ",
+    valueToSave: "NJ",
   },
   {
     name: "New Mexico",
-    abbreviation: "NM",
+    valueToSave: "NM",
   },
   {
     name: "New York",
-    abbreviation: "NY",
+    valueToSave: "NY",
   },
   {
     name: "North Carolina",
-    abbreviation: "NC",
+    valueToSave: "NC",
   },
   {
     name: "North Dakota",
-    abbreviation: "ND",
+    valueToSave: "ND",
   },
   {
     name: "Northern Mariana Islands",
-    abbreviation: "MP",
+    valueToSave: "MP",
   },
   {
     name: "Ohio",
-    abbreviation: "OH",
+    valueToSave: "OH",
   },
   {
     name: "Oklahoma",
-    abbreviation: "OK",
+    valueToSave: "OK",
   },
   {
     name: "Oregon",
-    abbreviation: "OR",
+    valueToSave: "OR",
   },
   {
     name: "Palau",
-    abbreviation: "PW",
+    valueToSave: "PW",
   },
   {
     name: "Pennsylvania",
-    abbreviation: "PA",
+    valueToSave: "PA",
   },
   {
     name: "Puerto Rico",
-    abbreviation: "PR",
+    valueToSave: "PR",
   },
   {
     name: "Rhode Island",
-    abbreviation: "RI",
+    valueToSave: "RI",
   },
   {
     name: "South Carolina",
-    abbreviation: "SC",
+    valueToSave: "SC",
   },
   {
     name: "South Dakota",
-    abbreviation: "SD",
+    valueToSave: "SD",
   },
   {
     name: "Tennessee",
-    abbreviation: "TN",
+    valueToSave: "TN",
   },
   {
     name: "Texas",
-    abbreviation: "TX",
+    valueToSave: "TX",
   },
   {
     name: "Utah",
-    abbreviation: "UT",
+    valueToSave: "UT",
   },
   {
     name: "Vermont",
-    abbreviation: "VT",
+    valueToSave: "VT",
   },
   {
     name: "Virgin Islands",
-    abbreviation: "VI",
+    valueToSave: "VI",
   },
   {
     name: "Virginia",
-    abbreviation: "VA",
+    valueToSave: "VA",
   },
   {
     name: "Washington",
-    abbreviation: "WA",
+    valueToSave: "WA",
   },
   {
     name: "West Virginia",
-    abbreviation: "WV",
+    valueToSave: "WV",
   },
   {
     name: "Wisconsin",
-    abbreviation: "WI",
+    valueToSave: "WI",
   },
   {
     name: "Wyoming",
-    abbreviation: "WY",
+    valueToSave: "WY",
+  },
+];
+
+const departments = [
+  {
+    name: "Marketing",
+    valueToSave: "Marketing",
+  },
+  {
+    name: "Engineering",
+    valueToSave: "Engineering",
+  },
+  {
+    name: "Human Resources",
+    valueToSave: "Human Resources",
+  },
+  {
+    name: "Legal",
+    valueToSave: "Legal",
   },
 ];
