@@ -12,7 +12,7 @@ import {
   fetchEmployees,
   createEmployee,
 } from "../../redux/employees/employeesSlice";
-import Modal from "../../components/Modal/index.jsx";
+import { Modal } from "@augt/p14-modal";
 import CustomSelect from "../../components/CustomSelect/index.jsx";
 
 function CreateEmployee() {
@@ -175,6 +175,7 @@ function CreateEmployee() {
         <Modal
           onClose={() => setShowModal(false)}
           errorMessage={errorMessage}
+          confirmationMessage="Employee created !"
         />
       )}
     </StyledGlobalLayout>
