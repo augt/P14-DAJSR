@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@augt/p14-modal": "^0.0.1",
+    "@augt/p14-modal": "^1.0.0",
     "@reduxjs/toolkit": "^2.2.1",
     "react": "^18.2.0",
     "react-data-table-component": "^7.6.2",
