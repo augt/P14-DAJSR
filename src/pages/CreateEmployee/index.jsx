@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   StyledFormLayout,
   StyledGlobalLayout,
@@ -8,10 +8,7 @@ import {
 } from "./index.style.js";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  fetchEmployees,
-  createEmployee,
-} from "../../redux/employees/employeesSlice";
+import { createEmployee } from "../../redux/employees/employeesSlice";
 import { Modal } from "@augt/p14-modal";
 import CustomSelect from "../../components/CustomSelect/index.jsx";
 
@@ -28,10 +25,6 @@ function CreateEmployee() {
   const [zipCode, setZipCode] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    dispatch(fetchEmployees());
-  }, []);
 
   function employeeValidation(employee) {
     const isName =

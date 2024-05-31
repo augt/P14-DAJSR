@@ -1,16 +1,11 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchEmployees } from "../../redux/employees/employeesSlice";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { StyledEmployeeList, TextField, ClearButton } from "./index.style";
 import PropTypes from "prop-types";
 
 function EmployeeList() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchEmployees());
-  }, []);
   const employees = useSelector((state) => state.employees);
 
   const columns = [
